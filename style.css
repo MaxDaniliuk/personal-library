@@ -1,0 +1,131 @@
+:root {
+    font-size: 16px;
+}
+
+*, ::before, ::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*  Header  */
+
+.icon {
+    fill:#F9F9F9;
+    padding-bottom: 0.5rem;
+}
+
+nav p {
+    color: #F9F9F9;
+    font-size: 4.1rem;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+.header {
+    grid-area: header;
+    height: 16vh;
+    background-color: #005DB3;
+    align-content: center;
+}
+
+/*  Main  */
+
+.main {
+    grid-area: main;
+    background-color: #F9F9F9;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.cards-wrapper {
+    /*
+    flex-grow: 1; Makes the cards wrapper to occupy the whole remaninng space. Try with grid first
+    */
+    max-height: 78vh; /* max-height: 78vh; and overflow: auto; enable overflow of the cards  */
+    overflow: auto;
+    
+    display: grid;
+    grid-template-columns: 250px;
+    grid-auto-rows: 250px;
+
+    
+}
+
+.cards-wrapper {
+    border: 1px solid;
+}
+
+
+.button-container {
+    padding-top: 10px;
+    align-self: center;
+}
+
+.add-book-button {
+    border: none;
+    background-color: #F9F9F9;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s linear;
+}
+
+.add-book-button:hover {
+    background-color: #E6E6E6;   
+}
+/*
+.button-container {
+    grid-area: button-container;
+    height: 6vh;
+}
+*/
+
+
+/* Footer  */
+.footer {
+    grid-area: footer;
+    height: 6vh;
+    background-color: #E6E6E6;
+
+    display: flex;
+    gap: 0.25rem;
+    font-size: 0.6rem;
+    justify-content: center;
+    align-items: end;
+}
+
+a {
+    text-decoration: none;
+}
+
+.footer a,
+.footer a:visited {
+    color: #000000;
+}
+
+.footer > * {
+    padding-bottom: 0.25rem;
+}
+
+/*  Wrapper - mobile layout  */
+
+.wrapper {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    
+    grid-template-areas: 
+    "header"
+    "main"
+    "footer";
+}
+
