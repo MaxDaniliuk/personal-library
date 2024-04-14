@@ -24,16 +24,19 @@
                     <p>A Game of Thrones</p>
                     <p>George R. R. Martin, 1996</p>
                     <p>694</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae unde incidunt ratione molestias tempore labore accusantium voluptatum nesciunt laudantium quis dolorem impedit, porro excepturi hic placeat quia repudiandae ipsum totam?</p>
                 </div>
                 <div class="book-card">
                     <p>A Game of Thrones</p>
                     <p>George R. R. Martin, 1996</p>
                     <p>694</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita deserunt repellendus nemo suscipit, facilis perspiciatis aperiam, eos laudantium qui amet possimus iure dolore nulla rem! Impedit officia modi magni sunt.</p>
                 </div>
                 <div class="book-card">
                     <p>A Game of Thrones</p>
                     <p>George R. R. Martin, 1996</p>
                     <p>694</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis quisquam facere sint aliquam impedit dolorem possimus eum veritatis accusantium, obcaecati eveniet praesentium libero quod culpa aut hic nobis ex debitis!</p>
                 </div>
             </div>
         </main>
@@ -43,7 +46,20 @@
             <a href="https://github.com/MaxDaniliuk/personal-library" target="_blank">Maksim Daniliuk</a>
         </footer>
     </div>
-
+    <dialog class="modal" id="dialog">
+        <form>
+            <div>
+                <p>Add new book</p>
+                <input class="input-book" type="text" id="title" placeholder="Ttile" name="title">
+                <input class="input-book" type="text" id="author" placeholder="Author" name="author">
+                <input class="input-book" type="number" id="pages" placeholder="Pages" name="pages">
+            </div>
+            <div>
+                <button id="closeBtn" value="cancel" formmethod="dialog">Cancel</button>
+                <button id="confirmBtn" value="default">Confirm</button>
+            </div>
+        </form>
+    </dialog>
     <script src="main.js"></script>
 </body>
 </html>

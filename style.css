@@ -1,5 +1,7 @@
 :root {
     font-size: 16px;
+    --header-height: 16vh;
+    --footer-height: 6vh;
 }
 
 *, ::before, ::after {
@@ -27,7 +29,7 @@ nav {
 
 .header {
     grid-area: header;
-    height: 16vh;
+    height: var(--header-height);
     background-color: #005DB3;
     align-content: center;
 }
@@ -48,9 +50,11 @@ nav {
     /*
     flex-grow: 1; Makes the cards wrapper to occupy the whole remaninng space. Try with grid first
     */
-    max-height: 78vh; /* max-height: 78vh; and overflow: auto; enable overflow of the cards  */
+    /*
+    max-height: 78vh; /* max-height: 78vh; and overflow: auto; enable overflow of the cards  
     overflow: auto;
-    
+    */ 
+
     display: grid;
     grid-template-columns: 250px;
     grid-auto-rows: 250px;
@@ -76,6 +80,7 @@ nav {
     font-size: 1.5rem;
     font-weight: 600;
     transition: all 0.3s linear;
+    outline: none;
 }
 
 .add-book-button:hover {
@@ -92,7 +97,7 @@ nav {
 /* Footer  */
 .footer {
     grid-area: footer;
-    height: 6vh;
+    height: var(--footer-height);
     background-color: #E6E6E6;
 
     display: flex;
@@ -129,3 +134,8 @@ a {
     "footer";
 }
 
+/*  Modal  */
+
+.modal {
+    margin: auto;
+}
