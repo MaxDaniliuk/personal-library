@@ -66,6 +66,10 @@ nav {
     border: 1px solid;
 }
 
+.book-card {
+    border: 1px solid red;
+}
+
 
 .button-container {
     padding-top: 10px;
