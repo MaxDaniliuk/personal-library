@@ -32,13 +32,17 @@
         <form>
             <div>
                 <p>Add new book</p>
-                <input class="input-book" type="text" id="title" placeholder="Ttile" name="title">
-                <input class="input-book" type="text" id="author" placeholder="Author" name="author">
-                <input class="input-book" type="number" id="pages" placeholder="Pages" name="pages">
-            </div>
-            <div>
-                <button id="closeBtn" value="cancel" formmethod="dialog">Cancel</button>
-                <button id="confirmBtn" value="default">Submit</button>
+                <button id="closeBtn" value="cancel" formmethod="dialog" formnovalidate>Cancel</button>
+                <form class="from-dialog" autocomplete="off">
+                    <input class="input-book" type="text" id="title" placeholder="Title" name="title" required>
+                    <input class="input-book" type="text" id="author" placeholder="Author" required>
+                    <input class="input-book" type="number" id="pages" placeholder="Pages" required>
+                    <label>
+                        <input type="checkbox" id="read-status"> 
+                        I have already read this book!
+                    </label>
+                    <button id="confirmBtn" value="default" >Confirm</button>
+                </form>
             </div>
         </form>
     </dialog>

@@ -32,15 +32,15 @@ dialog.addEventListener('click', e => {
 
 confirmBtn.addEventListener('click', (e) => {
     let inputs = [...inputFields];
-    let book = new Book(inputs[0].value, inputs[1].value, inputs[2].value);
-
-    addBookToLibrary(cardsWrapper, book)
-
-    makeFieldsEmpty(inputs);
-    e.preventDefault();
-    dialog.close();
-    myLibrary.push(book);
-    console.log(myLibrary);
+    if (inputs[0].checkValidity() && inputs[1].checkValidity() && inputs[2].checkValidity()) {
+        let book = new Book(inputs[0].value, inputs[1].value, inputs[2].value);
+        addBookToLibrary(cardsWrapper, book)
+        makeFieldsEmpty(inputs);
+        e.preventDefault();
+        dialog.close();  // Input require isn't working because of this
+        myLibrary.push(book);
+        console.log(myLibrary);
+    }
 })
 
 // Script
@@ -63,22 +63,29 @@ function addBookToLibrary(obj) { //Now I need to assign values to properties and
 
 function addBookToLibrary(cardsContainer, bookObject) {
     let div = document.createElement('div');
+    createCard(div, bookObject);
+    
+
+    cardsContainer.appendChild(div); 
+}
+
+
+
+function createCard(cardElement ,obj) {
     for (let i = 0; i < 3; i++) {
         let para = document.createElement('p');
         let node;
         if (i == 0) {
-            node = document.createTextNode(`"${bookObject['title']}"`);
+            node = document.createTextNode(`"${obj['title']}"`);
         } else if (i == 1) {
-            node = document.createTextNode(bookObject['author']);
+            node = document.createTextNode(obj['author']);
         } else if (i == 2) {
-            node = document.createTextNode(bookObject['pages']);
+            node = document.createTextNode(obj['pages']);
         }
         para.appendChild(node);
-        div.appendChild(para);
+        cardElement.appendChild(para);
     }
-    div.classList.add('book-card');
-    
-    cardsContainer.appendChild(div); //Haven't been run yet.
+    cardElement.classList.add('book-card');
 }
 
 function makeFieldsEmpty(array) {
