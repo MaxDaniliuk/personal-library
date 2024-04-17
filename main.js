@@ -2,14 +2,22 @@ const addBookBtn = document.querySelector('.add-book-button');
 const dialog = document.querySelector("#dialog");
 const closeBtn = document.querySelector('#closeBtn');
 const inputFields = document.querySelectorAll('.input-book');
-const confirmBtn =document.querySelector('#confirmBtn');
+const confirmBtn = document.querySelector('#confirmBtn');
 
 const cardsWrapper = document.querySelector('.cards-wrapper');
+const checkBox = document.querySelector('input[type="checkbox"]');
 
 const myLibrary = [];
 
 
+checkBox.addEventListener('change', e => {
+    console.log('YUo')
+})
+
 addBookBtn.addEventListener('click', () => {
+    if (checkBox.checked) {
+        checkBox.checked = false;
+    }   // Let's see how it will affet the color of button based on the checkbox state
     dialog.showModal();
 })
 
@@ -26,6 +34,7 @@ dialog.addEventListener('click', e => {
         e.clientY < dialogDimensions.top ||
         e.clientY > dialogDimensions.bottom
     ) {
+        makeFieldsEmpty([...inputFields]);
         dialog.close();
     }
 })
@@ -39,37 +48,49 @@ confirmBtn.addEventListener('click', (e) => {
         e.preventDefault();
         dialog.close();  // Input require isn't working because of this
         myLibrary.push(book);
-        console.log(myLibrary);
+        console.log("Library after adding a book", myLibrary);
     }
 })
 
-// Script
-
-
-function Book(title, author, pages) {
-                          // this id should be the same as array's id and change accordingly.  
-    this.title = title;   // bookId should be the same as library's index and div position in the DOM, array start at 0. 
-    this.author = author; // When I add it, it always at the end of array. But I need to track the index, bookId and
-    this.pages = pages;   // div position in the DOM when I remove one.
+function Book(title, author, pages) {  
+    this.title = title;   
+    this.author = author; 
+    this.pages = pages;   
 }
-
-/*
-function addBookToLibrary(obj) { //Now I need to assign values to properties and then append those values to the 
-    let div = createCard();   // corresponding textNodes "" 
-                              //***  How can I access those text nodes from another function   ***
-    let paraAll = document.querySelectorAll('')
-}
-*/
 
 function addBookToLibrary(cardsContainer, bookObject) {
     let div = document.createElement('div');
     createCard(div, bookObject);
-    
+    createButton(div, 'Read Status', 'read-status'); // "Finished" when checked - green
+    createButton(div, 'X', 'card-delete-button');    // "Not read" default red
 
     cardsContainer.appendChild(div); 
 }
 
+function setReadStatus() {
 
+}
+
+/*
+const checkbox = document.getElementById('myCheckbox')
+
+checkbox.addEventListener('change', (event) => {
+  if (event.currentTarget.checked) {
+    alert('checked');
+  } else {
+    alert('not checked');
+  }
+})
+*/
+
+
+function createButton(cardElement, text, className) {
+    let button = document.createElement('button');
+    let node = document.createTextNode(text);
+    button.appendChild(node);
+    button.classList.add(className);
+    cardElement.appendChild(button);
+}
 
 function createCard(cardElement ,obj) {
     for (let i = 0; i < 3; i++) {
@@ -93,3 +114,24 @@ function makeFieldsEmpty(array) {
         element.value = '';
     })
 }
+
+cardsWrapper.addEventListener('click', e => {
+    if (!e.target.classList.contains('card-delete-button')) return;
+    deleteBook(e.target.parentNode);
+    e.target.parentNode.remove();
+})
+
+function deleteBook(card) {
+    let cardsNode = document.querySelectorAll('.book-card');
+    let cardElements = [...cardsNode];
+    let index = 0;
+    cardElements.forEach(cardElement => {
+        if (cardElement === card) {
+            console.log(myLibrary[index]);
+            myLibrary.splice(index, 1);
+            return;
+        }
+        index++;
+    })
+}
+
