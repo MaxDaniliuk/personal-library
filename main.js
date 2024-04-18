@@ -62,17 +62,22 @@ function createCard(cardElement ,obj) {
         cardElement.appendChild(para);
     }
     cardElement.classList.add('book-card');
-    createButton(cardElement, 'Read Status', 'read-status', obj); 
-    createButton(cardElement, 'X', 'card-delete-button'); 
+    let buttonWrapper = document.createElement('div');
+    buttonWrapper.classList.add('button-wrapper');
+    createButton(buttonWrapper, 'read-status', obj); 
+    createButton(buttonWrapper, 'card-delete-button'); 
+    cardElement.appendChild(buttonWrapper);
 }
 
-function createButton(cardElement, text, className, objectBook = undefined) {
+function createButton(divContainer, className, objectBook = undefined) {
     let button = document.createElement('button');
     button.classList.add(className);
-    if (objectBook) {
+    if (objectBook && className === 'read-status') {
         setReadStatus(objectBook, button);
+    } else if (className === 'card-delete-button') { 
+        button.textContent = 'Change wrapper in event propagation function';
     }
-    cardElement.appendChild(button);
+    divContainer.appendChild(button);
 }
 
 function makeFieldsEmpty(array) {
@@ -83,11 +88,11 @@ function makeFieldsEmpty(array) {
 
 cardsWrapper.addEventListener('click', e => {
     if (e.target.classList.contains('card-delete-button')) {
-        findBook(e.target.parentNode, 'delete');
-        e.target.parentNode.remove();
+        findBook(e.target.parentNode.parentNode, 'delete');
+        e.target.parentNode.parentNode.remove();
     }
     if (e.target.classList.contains('read-status')) {
-        findBook(e.target.parentNode, e.target)
+        findBook(e.target.parentNode.parentNode, e.target)
     }
 })
 
