@@ -75,14 +75,15 @@ function createButton(divContainer, className, objectBook = undefined) {
     if (objectBook && className === 'read-status') {
         setReadStatus(objectBook, button);
     } else if (className === 'card-delete-button') { 
-        button.textContent = 'Change wrapper in event propagation function';
+        button.textContent = 'X';
     }
     divContainer.appendChild(button);
 }
 
 function makeFieldsEmpty(array) {
     array.forEach(element => {
-        element.value = '';
+        console.log(element.value)
+        element.value =  null;
     })
 }
 
@@ -142,13 +143,13 @@ dialog.addEventListener('click', e => {
 
 function changeToGreen(bookObject, readStatusButton) {
     bookObject['status'] = 'Read';
-    readStatusButton.style.backgroundColor = 'green';
+    readStatusButton.style.backgroundColor = '#6dcd00';
     readStatusButton.textContent = 'Read';
 }
 
 function changeToRed(bookObject, readStatusButton) {
     bookObject['status'] = 'Not read';
-    readStatusButton.style.backgroundColor = 'red';
+    readStatusButton.style.backgroundColor = '#cd006d';
     readStatusButton.textContent = 'Not read';
 }
 
