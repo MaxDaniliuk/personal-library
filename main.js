@@ -68,8 +68,6 @@ function createCard(cardElement ,obj) {
 
 function createButton(cardElement, text, className, objectBook = undefined) {
     let button = document.createElement('button');
-    let node = document.createTextNode(text);
-    button.appendChild(node);
     button.classList.add(className);
     if (objectBook) {
         setReadStatus(objectBook, button);
@@ -148,3 +146,4 @@ function changeToRed(bookObject, readStatusButton) {
     readStatusButton.style.backgroundColor = 'red';
     readStatusButton.textContent = 'Not read';
 }
+
