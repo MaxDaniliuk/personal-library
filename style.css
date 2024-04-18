@@ -2,6 +2,7 @@
     font-size: 16px;
     --header-height: 16vh;
     --footer-height: 6vh;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 *, ::before, ::after {
@@ -30,7 +31,7 @@ nav {
 .header {
     grid-area: header;
     height: var(--header-height);
-    background-color: #005DB3;
+    background-color: #005db3;
     align-content: center;
 }
 
@@ -47,32 +48,66 @@ nav {
 }
 
 .cards-wrapper {
-    /*
-    flex-grow: 1; Makes the cards wrapper to occupy the whole remaninng space. Try with grid first
-    */
-    /*
-    max-height: 78vh; /* max-height: 78vh; and overflow: auto; enable overflow of the cards  
-    overflow: auto;
-    */ 
-
     display: grid;
-    grid-template-columns: 250px;
-    grid-auto-rows: 250px;
-
-    
-}
-
-.cards-wrapper {
-    border: 1px solid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));; /* Chnage it later */
+    place-content: center;
 }
 
 .book-card {
-    border: 1px solid red;
+    background-color: #E6E6E6;
+    -webkit-box-shadow: 2px 2px 5px 2px #CACACACC;
+    -moz-box-shadow: 2px 2px 5px 2px #CACACACC;
+    box-shadow: 2px 2px 5px 2px #CACACACC;
+    border-radius: 5px;
+    margin: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
 }
 
+.book-card > p {
+    font-size: 22px;
+}
+
+.button-wrapper {
+    display: flex;
+}
+
+.read-status {
+    flex-basis: 60%;
+    transition: all 0.1s linear;
+}
+
+.read-status:hover {
+    filter: brightness(90%);
+}
+
+.card-delete-button {
+    margin-left: auto;
+    flex-basis: 30%;
+    background-color: #006acd;
+    color: #F9F9F9;
+    transition: all 0.3s linear;
+}
+
+.card-delete-button:hover {
+    background-color: #005db3;
+}
+
+.read-status, 
+.card-delete-button {
+    font-size: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
 
 .button-container {
-    padding-top: 10px;
+    padding-top: 40px;
     align-self: center;
 }
 
@@ -81,7 +116,7 @@ nav {
     background-color: #F9F9F9;
     padding: 10px;
     border-radius: 15px;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     font-weight: 600;
     transition: all 0.3s linear;
     outline: none;
@@ -90,15 +125,9 @@ nav {
 .add-book-button:hover {
     background-color: #E6E6E6;   
 }
-/*
-.button-container {
-    grid-area: button-container;
-    height: 6vh;
-}
-*/
-
 
 /* Footer  */
+
 .footer {
     grid-area: footer;
     height: var(--footer-height);
@@ -142,4 +171,89 @@ a {
 
 .modal {
     margin: auto;
+    width: 290px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 30px 15px;
+    background-color: #E6E6E6;
 }
+
+.modal::backdrop {
+    background-color: #00000066;
+}
+
+.form-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: auto;
+}
+
+.form-dialog > * {
+    font-size: 20px;
+    display: block;
+    font-size: 20px;
+}
+
+.form-dialog p {
+    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+#closeBtn {
+    background-color: #E6E6E6;
+}
+
+#closeBtn:hover {
+    background-color: #d9d9d9;
+}
+
+#closeBtn, 
+#confirmBtn {
+    outline: none;
+    border: none;
+    transition: all 0.3s linear;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 22px;
+}
+
+#confirmBtn {
+    background-color: #006acd;
+}
+
+#confirmBtn:hover {
+    background-color: #005db3;
+}
+
+
+input[type="text"], 
+input[type="checkbox"],
+input[type="number"] {
+    outline: none;
+    border: none;
+    background-color: #ffffff;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.form-dialog div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+input[type="checkbox"] {
+    height: 16px;
+    width: 16px;
+}
+
+label {
+    text-align: center;
+}
+
+
+
