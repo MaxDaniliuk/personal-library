@@ -20,6 +20,7 @@
                 <button type="submit" class="add-book-button">+ Add Book</button>
             </div>
             <div class="cards-wrapper">
+                
             </div>
         </main>
 
@@ -29,21 +30,17 @@
         </footer>
     </div>
     <dialog class="modal" id="dialog">
-        <form>
+        <form class="form-dialog" autocomplete="off">
+            <p>Add new book</p>
+            <input class="input-book" type="text" id="title" placeholder="Title" name="title" required>
+            <input class="input-book" type="text" id="author" placeholder="Author" required>
+            <input class="input-book" type="number" id="pages" placeholder="Pages" required>
             <div>
-                <p>Add new book</p>
-                <button id="closeBtn" value="cancel" formmethod="dialog" formnovalidate>Cancel</button>
-                <form class="from-dialog" autocomplete="off">
-                    <input class="input-book" type="text" id="title" placeholder="Title" name="title" required>
-                    <input class="input-book" type="text" id="author" placeholder="Author" required>
-                    <input class="input-book" type="number" id="pages" placeholder="Pages" required>
-                    <label>
-                        <input type="checkbox" id="read-status"> 
-                        I have already read this book!
-                    </label>
-                    <button id="confirmBtn" value="default" >Confirm</button>
-                </form>
+                <label for="check">I've already read this book!</label>
+                <input id="check" type="checkbox" id="read-status">
             </div>
+            <button id="confirmBtn" value="default" >Confirm</button>
+            <button id="closeBtn" value="cancel" formmethod="dialog" formnovalidate>Cancel</button>
         </form>
     </dialog>
     <script src="main.js"></script>
