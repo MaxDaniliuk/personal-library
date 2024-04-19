@@ -143,13 +143,12 @@ dialog.addEventListener('click', e => {
 
 function changeToGreen(bookObject, readStatusButton) {
     bookObject['status'] = 'Read';
-    readStatusButton.style.backgroundColor = '#6dcd00';
+    readStatusButton.style.backgroundColor = '#00b76d';
     readStatusButton.textContent = 'Read';
 }
 
 function changeToRed(bookObject, readStatusButton) {
     bookObject['status'] = 'Not read';
-    readStatusButton.style.backgroundColor = '#cd006d';
+    readStatusButton.style.backgroundColor = '#cfcfcf';
     readStatusButton.textContent = 'Not read';
 }
-

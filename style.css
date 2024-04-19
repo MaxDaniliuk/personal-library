@@ -228,7 +228,6 @@ a {
     background-color: #005db3;
 }
 
-
 input[type="text"], 
 input[type="checkbox"],
 input[type="number"] {
@@ -254,7 +253,7 @@ input[type="checkbox"] {
 label {
     text-align: center;
 }
-                               /*  768  */
+
 @media only screen and (min-width: 785px) {
     .wrapper {
         background-color: #F9F9F9;
