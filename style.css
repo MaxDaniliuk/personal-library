@@ -254,6 +254,26 @@ input[type="checkbox"] {
 label {
     text-align: center;
 }
+                               /*  768  */
+@media only screen and (min-width: 785px) {
+    .wrapper {
+        background-color: #F9F9F9;
+    }
 
+    .main {
+        justify-self: center;
+        width: 800px;
+    }
+}
 
+@media only screen and (min-width: 1440px) {
+    .modal {
+        margin: 180px auto auto auto; 
+    }
+}
 
+@media only screen and (min-width: 2560px) {
+    .modal {
+        margin: auto;
+    }
+}
