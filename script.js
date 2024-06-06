@@ -24,15 +24,13 @@ class Book {
         return this.#status;
     }
 
-    changeStatusToFinished(checkBox) {
-        if (checkBox.checked) this.#status = true;
-        return false;
+    changeStatusToFinished() {
+        this.#status = true;
     }
+
     toggleReadStatus() {
         this.#status = this.#status ? false : true;
     }
-
-
 }
 
 class OnlineLibrary {
@@ -43,7 +41,6 @@ class OnlineLibrary {
 
     static addBook(book) {
         this.myLibrary.push(book);
-        
     }
 
     static removeBook(index) {
@@ -91,54 +88,71 @@ class BookCardCreator {
 
     #createButton(buttonDiv, className) {
         let button = document.createElement('button');
-        button.classList.add(className);                                //book.setStatus()
-        button.textContent = className === 'card-delete-button' ? 'X' : this.#checkBox.checked ? 'Read' : 'Not read';
+        button.classList.add(className);
+        if (className === 'card-delete-button') button.textContent = 'X';
+        if (className === 'read-status') this.#setReadStatus(button)
         buttonDiv.appendChild(button);
+    }
+
+    #setReadStatus(button) {
+        if (this.#checkBox.checked) this.newBook.changeStatusToFinished();
+        EventHandler.changeReadStatusIdentifier(button, OnlineLibrary.myLibrary.length-1)
     }
 }
 
 class EventHandler {
-    #dialog;
-    #inputFields = [...document.querySelectorAll('.input-book')];
-    #checkBox = document.querySelector('input[type="checkbox"]');
-    #cardWrapper = document.querySelector('.cards-wrapper');
-    constructor() {
+    static #dialog;
+    static #inputFields = [...document.querySelectorAll('.input-book')];
+    static #checkBox = document.querySelector('input[type="checkbox"]');
+    static #cardWrapper = document.querySelector('.cards-wrapper');
+    static {
         this.#dialog = document.querySelector("#dialog");
 
         document.querySelector('.add-book-button').addEventListener('click', this.#openDialog.bind(this));
         document.querySelector('#confirmBtn').addEventListener('click', this.#createBookCard.bind(this));
-        this.#dialog.addEventListener('close', this.#resetFileds.bind(this));
+        this.#dialog.addEventListener('close', this.#resetFields.bind(this));
         this.#cardWrapper.addEventListener('click', this.#findBookCard.bind(this));
     }
 
-    #findBookCard(e) {
+    static #findBookCard(e) {
         [...document.querySelectorAll('.book-card')].forEach((bookCard, index) => {
             if (e.target.parentNode.parentNode === bookCard) {
                 if (e.target.classList.contains('card-delete-button')) {
                     OnlineLibrary.removeBook(index);
                     e.target.parentNode.parentNode.remove();
                 }
+                if (e.target.classList.contains('read-status')) {
+                    OnlineLibrary.myLibrary[index].toggleReadStatus()
+                    EventHandler.changeReadStatusIdentifier(e.target, index)
+                }
             }
         })
     }
+
+    static changeReadStatusIdentifier(targetButton, index) {
+        if (OnlineLibrary.myLibrary[index].status) {
+            targetButton.textContent = 'Read';
+            targetButton.style.backgroundColor = '#00b76d';
+        } else {
+            targetButton.textContent = 'Not read';
+            targetButton.style.backgroundColor = '#cfcfcf';
+        }
+    }
     
-    #openDialog() {
+    static #openDialog() {
         this.#dialog.showModal();
     }
-    #createBookCard(e) {
+    static #createBookCard(e) {
         if (this.#inputFields[0].checkValidity() && this.#inputFields[1].checkValidity() && this.#inputFields[2].checkValidity()) {
             new BookCardCreator(new Book(this.#inputFields[0].value, this.#inputFields[1].value, this.#inputFields[2].value), this.#checkBox, this.#cardWrapper).init();
         }
-        this.#resetFileds();
+        this.#resetFields();
         e.preventDefault();
         this.#dialog.close();
     }
 
-    #resetFileds() {
+    static #resetFields() {
         this.#checkBox.checked = false;
         this.#inputFields.forEach(input => input.value = null);
     }
 }
-
-new EventHandler();
-
