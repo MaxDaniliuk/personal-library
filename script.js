@@ -107,10 +107,10 @@ class EventHandler {
     static #cardWrapper = document.querySelector('.cards-wrapper');
     static {
         this.#dialog = document.querySelector("#dialog");
-
         document.querySelector('.add-book-button').addEventListener('click', this.#openDialog.bind(this));
         document.querySelector('#confirmBtn').addEventListener('click', this.#createBookCard.bind(this));
         this.#dialog.addEventListener('close', this.#resetFields.bind(this));
+        this.#dialog.addEventListener('click', this.#closeDialog.bind(this));
         this.#cardWrapper.addEventListener('click', this.#findBookCard.bind(this));
     }
 
@@ -154,5 +154,18 @@ class EventHandler {
     static #resetFields() {
         this.#checkBox.checked = false;
         this.#inputFields.forEach(input => input.value = null);
+    }
+
+    static #closeDialog(e) {
+        const dialogDimensions = this.#dialog.getBoundingClientRect();
+        if (
+            e.clientX < dialogDimensions.left ||
+            e.clientX > dialogDimensions.right ||
+            e.clientY < dialogDimensions.top ||
+            e.clientY > dialogDimensions.bottom
+        ) {
+            this.#resetFields();
+            this.#dialog.close();
+        }
     }
 }
