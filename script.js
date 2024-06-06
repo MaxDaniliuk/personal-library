@@ -24,12 +24,15 @@ class Book {
         return this.#status;
     }
 
-    changeStatusToFinished() {
-        this.#status = true;
+    changeStatusToFinished(checkBox) {
+        if (checkBox.checked) this.#status = true;
+        return false;
     }
-    changeReadStatus() {
+    toggleReadStatus() {
         this.#status = this.#status ? false : true;
     }
+
+
 }
 
 class OnlineLibrary {
@@ -40,9 +43,12 @@ class OnlineLibrary {
 
     static addBook(book) {
         this.myLibrary.push(book);
+        
     }
 
-    static removeBook() {}
+    static removeBook(index) {
+        this.myLibrary.splice(index, 1);
+    }
 }
 
 class BookCardCreator {
@@ -53,7 +59,7 @@ class BookCardCreator {
         this.newBook = book;
         this.#checkBox = checkBox;
         this.#cardsWrapper = cardsWrapper;
-        OnlineLibrary.addBook(book);
+        OnlineLibrary.addBook(this.newBook);
     }
 
     init() {
@@ -85,8 +91,8 @@ class BookCardCreator {
 
     #createButton(buttonDiv, className) {
         let button = document.createElement('button');
-        button.classList.add(className);
-        button.textContent = className === 'card-delete-button' ? 'X' : // Create button
+        button.classList.add(className);                                //book.setStatus()
+        button.textContent = className === 'card-delete-button' ? 'X' : this.#checkBox.checked ? 'Read' : 'Not read';
         buttonDiv.appendChild(button);
     }
 }
@@ -98,22 +104,41 @@ class EventHandler {
     #cardWrapper = document.querySelector('.cards-wrapper');
     constructor() {
         this.#dialog = document.querySelector("#dialog");
-        
-        document.querySelector('.add-book-button').addEventListener('click', this.openDialog.bind(this));
-        document.querySelector('#confirmBtn').addEventListener('click', this.createBookCard.bind(this));
+
+        document.querySelector('.add-book-button').addEventListener('click', this.#openDialog.bind(this));
+        document.querySelector('#confirmBtn').addEventListener('click', this.#createBookCard.bind(this));
+        this.#dialog.addEventListener('close', this.#resetFileds.bind(this));
+        this.#cardWrapper.addEventListener('click', this.#findBookCard.bind(this));
+    }
+
+    #findBookCard(e) {
+        [...document.querySelectorAll('.book-card')].forEach((bookCard, index) => {
+            if (e.target.parentNode.parentNode === bookCard) {
+                if (e.target.classList.contains('card-delete-button')) {
+                    OnlineLibrary.removeBook(index);
+                    e.target.parentNode.parentNode.remove();
+                }
+            }
+        })
     }
     
-    openDialog() {
+    #openDialog() {
         this.#dialog.showModal();
     }
-    createBookCard(e) {
+    #createBookCard(e) {
         if (this.#inputFields[0].checkValidity() && this.#inputFields[1].checkValidity() && this.#inputFields[2].checkValidity()) {
-            const newBookCard = new BookCardCreator(new Book(this.#inputFields[0].value, this.#inputFields[1].value, this.#inputFields[2].value), this.#checkBox, this.#cardWrapper); 
-            newBookCard.init();
+            new BookCardCreator(new Book(this.#inputFields[0].value, this.#inputFields[1].value, this.#inputFields[2].value), this.#checkBox, this.#cardWrapper).init();
         }
+        this.#resetFileds();
         e.preventDefault();
         this.#dialog.close();
     }
+
+    #resetFileds() {
+        this.#checkBox.checked = false;
+        this.#inputFields.forEach(input => input.value = null);
+    }
 }
 
-const evnt = new EventHandler();
+new EventHandler();
+
