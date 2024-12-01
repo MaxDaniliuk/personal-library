@@ -30,16 +30,25 @@
         </footer>
     </div>
     <dialog class="modal" id="dialog">
-        <form class="form-dialog" autocomplete="off">
+        <form class="form-dialog" autocomplete="off" novalidate>
             <p>Add new book</p>
-            <input class="input-book" type="text" id="title" placeholder="Title" name="title" required>
-            <input class="input-book" type="text" id="author" placeholder="Author" required>
-            <input class="input-book" type="number" id="pages" placeholder="Pages" required>
+            <label for="title">
+                <span class="msg title-ntf"></span>
+                <input class="input-book" type="text" id="title" placeholder="Title" name="title" required autofocus>
+            </label>
+            <label for="author">
+                <span class="msg author-ntf"></span>
+                <input class="input-book" type="text" id="author" placeholder="Author" name="author" required>
+            </label>
+            <label for="pages">
+                <span class="msg pages-ntf"></span>
+                <input class="input-book" type="number" id="pages" placeholder="Pages" min="0" name="pages" required>
+            </label>
             <div>
                 <label for="check">I've already read this book!</label>
                 <input id="check" type="checkbox" id="read-status">
             </div>
-            <button id="confirmBtn" value="default" >Confirm</button>
+            <button id="confirmBtn" value="default" type="submit" disabled>Confirm</button>
             <button id="closeBtn" value="cancel" formmethod="dialog" formnovalidate>Cancel</button>
         </form>
     </dialog>

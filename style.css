@@ -40,11 +40,13 @@ nav {
 .main {
     grid-area: main;
     background-color: #F9F9F9;
-
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
 
+button {
+    cursor: pointer;
 }
 
 .cards-wrapper {
@@ -224,8 +226,12 @@ a {
     background-color: #006acd;
 }
 
-#confirmBtn:hover {
+#confirmBtn:enabled:hover {
     background-color: #005db3;
+}
+
+#confirmBtn:disabled {
+    cursor: not-allowed;
 }
 
 input[type="text"], 
@@ -275,4 +281,48 @@ label {
     .modal {
         margin: auto;
     }
+}
+
+/* Form validation */
+
+form label * {
+    display: block;
+    width: 100%;
+}
+
+input#title:invalid, 
+input#author:invalid, 
+input#pages:invalid {
+    border: 1.5px solid #f87171;
+}
+
+.title-ntf::after {
+    content: "Please enter a title.";
+}
+
+.author-ntf::after {
+    content: "Please enter author's name.";
+}
+
+.pages-ntf::after {
+    content: "Enter total number of pages.";
+}
+
+form input::placeholder {
+    font-style: italic;
+}
+
+input#title:valid, 
+input#author:valid,
+input#pages:valid {
+    border: 1.5px solid #22c55e;
+}
+
+.msg {
+    font-style: italic;
+    text-align: start;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 70%;
+    color: #5b5b5b;
 }

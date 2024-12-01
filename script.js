@@ -102,16 +102,32 @@ class BookCardCreator {
 
 class EventHandler {
     static #dialog;
+    
+    
     static #inputFields = [...document.querySelectorAll('.input-book')];
     static #checkBox = document.querySelector('input[type="checkbox"]');
     static #cardWrapper = document.querySelector('.cards-wrapper');
+    static #confirmBtn = document.querySelector('#confirmBtn');
+    static #inputTitle = document.querySelector('#title');
+    static #inputAuthor = document.querySelector('#author');
+    static #inputPages = document.querySelector('#pages');
     static {
         this.#dialog = document.querySelector("#dialog");
+        this.#inputTitle.addEventListener('input', () => FormValidator.isInputValid(this.#inputTitle, "Title"));
+        this.#inputAuthor.addEventListener('input', () => FormValidator.isInputValid(this.#inputAuthor, "Author"));
+        this.#inputPages.addEventListener('input', () => FormValidator.isInputValid(this.#inputPages, "Pages"));
         document.querySelector('.add-book-button').addEventListener('click', this.#openDialog.bind(this));
-        document.querySelector('#confirmBtn').addEventListener('click', this.#createBookCard.bind(this));
-        this.#dialog.addEventListener('close', this.#resetFields.bind(this));
+        this.#confirmBtn.addEventListener('click', this.#createBookCard.bind(this));
+        this.#dialog.addEventListener('close', () => {
+            FormValidator.resetInputStatuses();
+            this.#resetFields();
+        });
         this.#dialog.addEventListener('click', this.#closeDialog.bind(this));
         this.#cardWrapper.addEventListener('click', this.#findBookCard.bind(this));
+    }
+
+    static getConfrimBtn() {
+        return this.#confirmBtn;
     }
 
     static #findBookCard(e) {
@@ -142,11 +158,13 @@ class EventHandler {
     static #openDialog() {
         this.#dialog.showModal();
     }
+
     static #createBookCard(e) {
         if (this.#inputFields[0].checkValidity() && this.#inputFields[1].checkValidity() && this.#inputFields[2].checkValidity()) {
             new BookCardCreator(new Book(this.#inputFields[0].value, this.#inputFields[1].value, this.#inputFields[2].value), this.#checkBox, this.#cardWrapper).init();
         }
         this.#resetFields();
+        FormValidator.resetInputStatuses();
         e.preventDefault();
         this.#dialog.close();
     }
@@ -164,8 +182,56 @@ class EventHandler {
             e.clientY < dialogDimensions.top ||
             e.clientY > dialogDimensions.bottom
         ) {
+            FormValidator.resetInputStatuses();
             this.#resetFields();
             this.#dialog.close();
         }
+    }
+}
+
+class FormValidator {
+    static #titleStatus = false;
+    static #authorStatus = false;
+    static #pagesStatus = false;
+
+    static #getTitleStatus() {
+        return this.#titleStatus;
+    }
+    
+    static #getAuthorStatus() {
+        return this.#authorStatus;
+    }
+
+    static #getPagesStatus() {
+        return this.#pagesStatus;
+    }
+
+    static #setCurrentInputStatus(inputType, status) {
+        return inputType === "Title" ? this.#titleStatus = status : 
+               inputType === "Author" ? this.#authorStatus = status : 
+               this.#pagesStatus = status;
+    }
+
+    static resetInputStatuses() {
+        this.#titleStatus = false;
+        this.#authorStatus = false;
+        this.#pagesStatus = false;
+        EventHandler.getConfrimBtn().setAttribute("disabled", "true");
+    }
+
+    static isInputValid(inputField, inputType) {
+        console.log(inputField);
+        if (!inputField.validity.valueMissing) {
+            FormValidator.#setCurrentInputStatus(inputType, true);
+
+            if (this.#getTitleStatus() && this.#getAuthorStatus() && this.#getPagesStatus()) {
+                console.log(EventHandler.getConfrimBtn())
+                EventHandler.getConfrimBtn().removeAttribute("disabled");
+            }
+            return true;
+        }
+        FormValidator.#setCurrentInputStatus(inputType, false);
+        EventHandler.getConfrimBtn().setAttribute("disabled", "true");
+        return false;
     }
 }
